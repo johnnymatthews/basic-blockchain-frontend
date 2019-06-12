@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Aion Web3.js Example</title>
+        <link rel="stylesheet" type="text/css" href="style.css">
+    </head>
+    <body>
+        <header>
+            <center>
+                <h1>Aion Web3.js Example</h1>
+            </center>
+        </header>
+        <main>
+            <section>
+                <h2>Get String</h2>
+                <p>
+                    Click here to view the <code>myStr</code> variable from the
+                    <code>HelloAvm.java</code> contract.
+                </p>
+                <button onclick="getString()">Get String</button>
+                <h3 id="output_h3"></h3>
+                <p>
+                    Last updated (Unix Time):
+                    <code id="last_updated_code">0</code>
+                </p>
+            </section>
+            <hr />
+            <section>
+                <h2>Set String</h2>
+                <p>
+                    Enter a new string for the <code>myStr</code> variable in
+                    the <code>HelloAvm.java</code> contract, and click the
+                    button to set it.
+                </p>
+                <input
+                    placeholder="Put your message here."
+                    id="input_string_textarea"
+                />
+                <button id="set_string_button" onclick="setString()">Set String</button>
+            </section>
+        </main>
+    </body>
+    <script src="web3.min.js"></script>
+    <script src="script.js"></script>
+</html>
