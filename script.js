@@ -7,7 +7,10 @@ const nodeUrl = "NODE_URL";
 const privateKey = "PRIVATE_KEY";
 
 // The address of the contract that you want to call.
-const contractAddress = "CONTRACT_ADDRESS";
+let contractAddress = "CONTRACT_ADDRESS";
+
+// Uncomment the line below if you want to use the pre-deployed contract. This overwrites the contract address listed above.
+let contractAddres = "0xa003cd11951f9a58f81df851e83cf7b5eca4b2ca5d6429dadb49021c13603357";
 // =================================================
 
 // Create a web3 object by supplying a node to use.
