@@ -39,4 +39,4 @@ If you want to use a copy of the above contract that's already been deployed, us
 
 ## Demo
 
-There's a [live demo of this app available](#), kindly hosted for free by Netlify.
+There's a [live demo of this app available](https://basic-blockchain-frontend.netlify.com)kindly hosted for free by Netlify.
