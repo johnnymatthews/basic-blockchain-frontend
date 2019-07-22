@@ -1,5 +1,3 @@
-console.log(env.PRIVATE_KEY);
-
 // ================================================
 // Enter custom variables here:
 // The URL of the node that you want to connect to.
