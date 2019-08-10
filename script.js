@@ -1,13 +1,13 @@
 // ================================================
 // Enter custom variables here:
 // The URL of the node that you want to connect to.
-const nodeUrl = "NODE_URL";
+const nodeUrl = "https://aion.api.nodesmith.io/v1/mastery/jsonrpc?apiKey=ab40c8f567874400a69c1e80a1399350";
 
 // The private key of the account you want to use.
-const privateKey = "PRIVATE_KEY";
+const privateKey = "269a1fd07297bd5e89ad1b55feaf809f90aaf7426c0d96579653939b5a468466cfb364bd76d41c6d322928a042b44c5e8e06bde11b2177f8888304f364e30f44";
 
 // The address of the contract that you want to call.
-let contractAddress = "CONTRACT_ADDRESS";
+// let contractAddress = "CONTRACT_ADDRESS";
 
 // Uncomment the line below if you want to use the pre-deployed contract. This overwrites the contract address listed above.
 let contractAddress = "0xa003cd11951f9a58f81df851e83cf7b5eca4b2ca5d6429dadb49021c13603357";
@@ -72,6 +72,7 @@ async function setString() {
     const signedTransaction = await web3.eth.accounts
         .signTransaction(transaction, account.privateKey)
         .then(transactionResponse => (signedCall = transactionResponse));
+    console.log("Signed Transaction: ", signedTransaction);
 
     // Send the transaction to the network and wait for a response.
     const transactionReceipt = await web3.eth
@@ -84,5 +85,78 @@ async function setString() {
         });
 
     // Log the receipt.
+    console.log("Transaction Receipt: ", transactionReceipt);
+    document.querySelector("#set_string_button").innerHTML = "Set String";
+    document.querySelector("#set_string_button").disabled = false;
+}
+
+// Deploy a contract to the network using the bytecode.
+async function deployContract() {
+    console.log("Deploying contract.");
+    let contractBytecode = document.querySelector('#contract_bycode_input').innerHTML;
+
+    console.log("Creating Transaction Object...");
+    const transaction = {
+        from: account.address,
+        data: contractBytecode,
+        gasPrice: 10000000000,
+        gas: 5000000,
+        type: '0x2' // Java contract deployment.
+    };
+
+    // Sign the transaction.
+    const signedTransaction = await web3.eth.accounts
+        .signTransaction(transaction, account.privateKey)
+        .then(transactionResponse => (signedCall = transactionResponse));
+
+    // Send the transaction to the network and wait for a response.
+    const transactionReceipt = await web3.eth
+    .sendSignedTransaction(signedTransaction.rawTransaction)
+    .on("receipt", receipt => {
+        console.log(
+            "Receipt received!\ntransactionHash =",
+            receipt.transactionHash
+        );
+    });
+
+    // Log the receipt.
     console.log(transactionReceipt);
+}
+
+async function deployContract2() {
+    // Set the button to loading and disable.
+    document.querySelector("#deploy_contract_button").innerHTML = "Loading...";
+    document.querySelector("#deploy_contract_button").disabled = true;
+
+    // Create the data object, with the contract_bytecode_input textbox.
+    let data = document.querySelector("#contract_bytecode_input").value;
+
+    // Create the transaction object.
+    const transaction = {
+        from: account.address,
+        to: contractAddress,
+        data: data,
+        gasPrice: 10000000000,
+        gas: 2000000,
+        type: "0x1"
+    };
+
+    // Sign the transaction.
+    const signedTransaction = await web3.eth.accounts
+        .signTransaction(transaction, account.privateKey)
+        .then(transactionResponse => (signedCall = transactionResponse));
+    console.log("Signed Transaction: ", signedTransaction);
+
+    // Send the transaction to the network and wait for a response.
+    const transactionReceipt = await web3.eth
+        .sendSignedTransaction(signedTransaction.rawTransaction)
+        .on("receipt", receipt => {
+            console.log(
+                "Receipt received!\ntransactionHash =",
+                receipt.transactionHash
+            );
+        });
+
+    document.querySelector("#deploy_contract_button").innerHTML = "Deploy Contract";
+    document.querySelector("#deploy_contract_button").disabled = false;
 }
